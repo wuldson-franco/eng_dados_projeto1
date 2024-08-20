@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+  minio:
+    image: minio/minio
+    container_name: minio
+    environment:
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minio@1234!
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+  
+  minio_mc:
+    image: minio/mc
+    container_name: minio_mc
+    depends_on:
+      - minio
+    entrypoint: |
+      sh -c "
+      sleep 10 &&
+      mc alias set myminio http://minio:9000 minioadmin minio@1234! &&
+      mc mb myminio/landing
+      "
+
+  postgres-airflow:
+    image: postgres:15
+    container_name: postgres-airflow
+    environment:
+      POSTGRES_USER: post_airflow
+      POSTGRES_PASSWORD: airflow_123
+      POSTGRES_DB: airflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    
+  airflow:
+    build:
+      context: .
+      dockerfile: airflow/config_airflow/airflow.Dockerfile
+    container_name: airflow
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://post_airflow:airflow_123@postgres-airflow:5432/airflow
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'False'
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+      AIRFLOW__CORE__LOGGING_LEVEL: INFO
+      MINIO_ENDPOINT: http://minio:9000
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minio@1234!
+    depends_on:
+      - postgres-airflow
+      - minio
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/config_airflow:/opt/airflow/config_airflow
+    command: ['airflow', 'standalone']
+
+  mariadb:
+    image: mariadb:10
+    container_name: local_mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: root  
+      MYSQL_DATABASE: lakeestudo        
+      MYSQL_USER: mariadb                 
+      MYSQL_PASSWORD: maria123        
+    ports:
+      - "3306:3306"                      
+    volumes:
+      - mariadb_data:/var/lib/mysql 
+
+
+volumes:
+  postgres_data:
+  minio_data:
+  mariadb_data:
