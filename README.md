@@ -10,7 +10,7 @@ Bons estudos e bebam água💦!
 ## 📊 Arquitetura do Pipeline
 Abaixo está a representação gráfica da arquitetura deste pipeline de dados:
 
-![Arquitetura do Pipeline](Dw_LakeEstudo.png)
+![Arquitetura do Pipeline](https://github.com/user-attachments/assets/4547f48f-18d5-41e4-8938-c624b6e43a56)
 
 Nesta arquitetura, os dados são extraídos de várias fontes, transformados e carregados em um Data Warehouse utilizando Apache Airflow e dbt, e finalmente consumidos por ferramentas de visualização como o Metabase.
 
