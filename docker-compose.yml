@@ -75,8 +75,38 @@ services:
     volumes:
       - mariadb_data:/var/lib/mysql 
 
+  metabase:
+    image: metabase/metabase:v0.47.1
+    container_name: metabase
+    environment:
+      - MB_DB_TYPE=postgres
+      - MB_DB_DBNAME=metabase
+      - MB_DB_PORT=5432
+      - MB_DB_USER=metabase
+      - MB_DB_PASS=metabase_password
+      - MB_DB_HOST=postgres-metabase
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres-metabase
+    volumes:
+      - metabase_data:/metabase-data
+
+  postgres-metabase:
+    image: postgres:15
+    container_name: postgres-metabase
+    environment:
+      POSTGRES_DB: metabase
+      POSTGRES_USER: metabase
+      POSTGRES_PASSWORD: metabase_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_metabase_data:/var/lib/postgresql/data
 
 volumes:
   postgres_data:
   minio_data:
   mariadb_data:
+  metabase_data:
+  postgres_metabase_data:

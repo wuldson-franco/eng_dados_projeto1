@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: lakeestudo
+    description: "Fonte de dados para clientes na Lake Estudo"
+    tables:
+      - name: Vendas_Bike
+        description: "Tabela de clientes da Lake Estudo"
+        columns:
+          - name: VendasID
+            description: "Chave primária para esta tabela"
+            tests:
+              - unique
+              - not_null
+          - name: VendedorID
+            description: "Nome do cliente"
+          - name: ClienteID
+            description: "Estado onde o cliente reside"
+          - name: Data
+            description: "Sexo do cliente"
+          - name: Total
+            description: "Status do cliente"

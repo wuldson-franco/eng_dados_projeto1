@@ -1,0 +1,12 @@
+dbt_bike:
+  target: dev
+  outputs:
+    dev:
+      type: mariadb
+      server: localhost
+      port: 3306  # optional
+      database: lakeestudo # optional, should be same as schema
+      schema: lakeestudo
+      username: root
+      password: root
+      driver: MySQL ODBC 8.0 ANSI Driver

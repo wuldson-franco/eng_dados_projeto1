@@ -1,0 +1,32 @@
+
+version: 2
+
+sources:
+  - name: lakeestudo
+    description: "Fonte de dados para clientes na Lake Estudo"
+    tables:
+      - name: vendas
+        description: "Tabela de clientes da Lake Estudo, dados vindos da novadrive"
+        columns:
+          - name: id_vendas
+            description: "Chave primária para esta tabela"
+            tests:
+              - unique
+              - not_null
+          - name: id_veiculos
+            description: "codigo do veiculo"
+          - name: id_concessionarias
+            description: "codigo das Concessionarias que o cliente comprou"
+          - name: id_vendedores
+            description: "codigo dos vendedores"
+          - name: id_clientes
+            description: "codigo do cliente"
+          - name: valor_pago
+            description: "valor pago na compra"
+          - name: data_venda
+            description: "data da venda"
+          - name: data_inclusao
+            description: "Data cadastro cliente"
+          - name: data_atualizacao
+            description: "Data altareção do cliente"
+

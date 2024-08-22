@@ -3,6 +3,7 @@ from airflow.decorators import dag
 from airflow.operators.python import PythonOperator
 from airflow.utils.dates import days_ago
 from airflow.utils.task_group import TaskGroup
+from airflow.operators.bash import BashOperator
 
 from tasks.task_parquet import postgres_to_minio_etl_parquet
 from tasks.task_sheets import google_sheet_to_minio_etl
@@ -33,6 +34,7 @@ def main_dag():
     access_key = 'minioadmin'
     secret_key = 'minio@1234!'
     sheet_id = '1feUG0eV9ekpwsW9CFa4EophJDUvbBaNoSPdm13mWnoo'
+    dbt_project_path = '/dbt_bike/models/dw_dim/'
 
 
     #with TaskGroup("group_task_parquet_full", tooltip="Tasks processadas do BD externo para minio, salvando em .parquet") as group_task_parquet_full:
@@ -59,8 +61,17 @@ def main_dag():
                 op_args=[sheet_id, sheets_name, bucket_name, endpoint_url, access_key, secret_key]
             )
 
+    # Task para rodar os projetos do dbtdbt, 
+    # voce pode incluir os outros projetos aqui ou criar uma DAG separada para eles.
+    tasks_dbt = BashOperator(
+        task_id='dbt_run',
+        bash_command=f'cd {dbt_project_path} && dbt run',  # Ajuste o comando conforme necessário
+        dag=dag,
+    )
+
     # Definindo a ordem de execução dos grupos
-    #group_task_parquet_full >> 
-    group_task_parquet >> group_task_sheets
+    #group_task_parquet_full >> -- utilizar apenas na primeira execucao da carga 
+    # Aqui a gente vai garantir que o airflow execute primeiramente as cargas e depois as transformações.
+    group_task_parquet >> group_task_sheets >> tasks_dbt  
 
 main_dag_instance = main_dag()
