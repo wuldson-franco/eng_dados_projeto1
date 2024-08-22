@@ -1,8 +1,8 @@
 # Projeto Engenharia de Dados
 ## 🚀 Data Pipeline Project
 
-Este repositório contém a estrutura de um projeto completo de pipeline de dados, integrando o Apache Airflow e dbt (Data Build Tool), bem como a utilização de spark na extração dos dados, criação de um storage utilizando o Minio e a utilização dos bancos de dados Postgres e MariaDb. O objetivo deste projeto é fornecer uma base introdutória, porém sólida para a construção, orquestração e transformação de dados, utilizando as melhores práticas do setor.
-Esse projeto tem como objetivo a entrega prática dos meus estudos sobre a área de engenharia de dados. Tive como base de inspiração algumas publicações nessa área, os cursos(links no final) e experiências de trabalho que obtive ao longo dos últimos anos. Além dessa parte prática, deixo aqui uma publicação que fiz, que tem por título "Aspectos essenciais e Práticos sobre Engenharia de Dados"(Link)
+Este repositório contém a estrutura de um projeto completo de pipeline de dados, integrando o Apache Airflow e dbt (Data Build Tool), bem como a utilização de spark na extração dos dados, criação de um storage utilizando o Minio e a utilização dos bancos de dados Postgres e MariaDb. O objetivo deste projeto é fornecer uma base introdutória, porém sólida para a construção, orquestração e transformação de dados, utilizando as melhores práticas do setor, bem como a entrega prática dos meus estudos sobre a área de engenharia de dados. Tive como base de inspiração algumas publicações nessa área, os cursos(links no final) e experiências de trabalho que obtive ao longo dos últimos anos. 
+Além dessa parte mais tecnica, deixo aqui uma publicação que fiz, tendo como título "Aspectos essenciais e Práticos sobre Engenharia de Dados"(Link)
 
 Espero que todo esse material possa servir de base para todos aqueles que queiram ingressar ou se aprofundar mais nessa area. 
 Bons estudos e bebam água💦!
